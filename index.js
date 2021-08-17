@@ -3,6 +3,7 @@ const argv = require('minimist')(process.argv.slice(2));
 const jsonServer = require('json-server');
 const path = require('path');
 const express = require('express');
+const cors   = require('cors');
 const util     = require('util');
 const server = jsonServer.create();
 const router = jsonServer.router(path.join(__dirname, 'db.json'));
@@ -31,6 +32,8 @@ if(util.isString(argv.host)){
 
 // Set default middlewares (logger, static, cors and no-cache)
 server.use(defaultMiddleware);
+
+server.use(cors())
 
 // Add custom routes before JSON Server router
 server.get('/echo', (req, res) => {
